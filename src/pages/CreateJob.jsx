@@ -9,6 +9,7 @@ function CreateJob() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const BACKEND_URL= import.meta.env.VITE_BACKEND_URL
 
   const submitJob = async (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ function CreateJob() {
     try {
       const payloadObj = JSON.parse(payload);
 
-      const res = await fetch("http://dotix-backend-production.up.railway.app/api/jobs", {
+      const res = await fetch(`${BACKEND_URL}/api/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ taskName, priority, payload: payloadObj }),

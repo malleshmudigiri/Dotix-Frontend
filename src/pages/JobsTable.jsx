@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
 function JobsTable() {
   const [jobs, setJobs] = useState([]);
   const [status, setStatus] = useState("");
@@ -10,11 +12,13 @@ function JobsTable() {
 
   const navigate = useNavigate();
 
+  const BACKEND_URL= import.meta.env.VITE_BACKEND_URL
+
  
   const fetchJobs = async (statusVal = "", priorityVal = "") => {
     setLoading(true);
     try {
-      let url = "http://dotix-backend-production.up.railway.app/api/jobs";
+      let url = `${BACKEND_URL}/api/jobs`;
       const query = [];
       if (statusVal) query.push(`status=${encodeURIComponent(statusVal)}`);
       if (priorityVal) query.push(`priority=${encodeURIComponent(priorityVal)}`);
@@ -36,7 +40,7 @@ function JobsTable() {
   const runJob = async (id) => {
     try {
       setLoading(true);
-      const res = await fetch(`http://dotix-backend-production.up.railway.app/api/run-job/${id}`, { method: "POST" });
+      const res = await fetch(`${BACKEND_URL}/api/run-job/${id}`, { method: "POST" });
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.error || "Failed to run job");

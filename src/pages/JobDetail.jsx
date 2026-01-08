@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
+
+
 function JobDetail() {
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const BACKEND_URL= import.meta.env.VITE_BACKEND_URL
 
   useEffect(() => {
     const fetchJob = async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://dotix-backend-production.up.railway.app/api/jobs/${id}`);
+        const res = await fetch(`${BACKEND_URL}/api/jobs/${id}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to fetch job");
         setJob(data);
